@@ -17,11 +17,20 @@ final class SerializationUtil {
     return outputStream.toByteArray();
   }
   
+  static int serializedSize(Serializable object) throws IOException {
+    // TODO optimize
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    try (ObjectOutputStream objectStream = new ObjectOutputStream(outputStream)) {
+      objectStream.writeObject(object);
+    }
+    return outputStream.size();
+  }
+
   static Object dersialize(byte[] data) throws ClassNotFoundException, IOException {
     try (ByteArrayInputStream in = new ByteArrayInputStream(data);
         ObjectInputStream objectStream = new ObjectInputStream(in)) {
       return objectStream.readObject();
     }
   }
-  
+
 }

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.BitSet;
 
 public class SerializedPojo implements Serializable {
-  
+
   private Integer value1;
   private Long value2;
   private String value3;

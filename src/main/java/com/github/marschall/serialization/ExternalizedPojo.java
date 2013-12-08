@@ -8,6 +8,7 @@ import java.io.InvalidClassException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.BitSet;
@@ -90,6 +91,15 @@ public class ExternalizedPojo implements Externalizable {
     } else {
       out.writeUTF(value3);
     }
+    
+    if (value4 == null) {
+      out.writeByte(-1);
+    } else {
+      out.writeByte(value4.scale());
+      byte[] byteArray = value4.unscaledValue().toByteArray();
+      out.writeInt(byteArray.length);
+      out.write(byteArray);
+    }
 
     // TODO Auto-generated method stub
 
@@ -125,6 +135,17 @@ public class ExternalizedPojo implements Externalizable {
       this.value3 = null;
     } else {
       this.value3 = stringVal;
+    }
+    
+    int scale = in.readByte();
+    if (scale == -1) {
+      this.value4 = null;
+    } else {
+      int length = in.readInt();
+      byte[] value = new byte[length];
+      in.readFully(value);
+      BigInteger uncsaled = new BigInteger(value);
+      this.value4 = new BigDecimal(uncsaled, scale);
     }
 
     // TODO Auto-generated method stub

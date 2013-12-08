@@ -1,15 +1,12 @@
 package com.github.marschall.serialization;
 
+import static com.github.marschall.serialization.SerializationUtil.dersialize;
+import static com.github.marschall.serialization.SerializationUtil.serialize;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import static com.github.marschall.serialization.SerializationUtil.serialize;
-import static com.github.marschall.serialization.SerializationUtil.dersialize;
 
 import org.junit.Test;
 
