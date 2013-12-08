@@ -13,7 +13,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.BitSet;
 
-public class ExternalizedPojo implements Externalizable {
+public class ExternalizedPojo implements Externalizable, WritablePojo {
 
   private static final long serialVersionUID = 1L;
 
@@ -27,6 +27,7 @@ public class ExternalizedPojo implements Externalizable {
     return value1;
   }
 
+  @Override
   public void setValue1(Integer value1) {
     this.value1 = value1;
   }
@@ -35,6 +36,7 @@ public class ExternalizedPojo implements Externalizable {
     return value2;
   }
 
+  @Override
   public void setValue2(Long value2) {
     this.value2 = value2;
   }
@@ -43,6 +45,7 @@ public class ExternalizedPojo implements Externalizable {
     return value3;
   }
 
+  @Override
   public void setValue3(String value3) {
     this.value3 = value3;
   }
@@ -51,6 +54,7 @@ public class ExternalizedPojo implements Externalizable {
     return value4;
   }
 
+  @Override
   public void setValue4(BigDecimal value4) {
     this.value4 = value4;
   }
@@ -61,6 +65,7 @@ public class ExternalizedPojo implements Externalizable {
   }
 
 
+  @Override
   public void setFlags(BitSet flags) {
     this.flags = flags;
   }
@@ -91,13 +96,17 @@ public class ExternalizedPojo implements Externalizable {
     } else {
       out.writeUTF(value3);
     }
-    
+
     if (value4 == null) {
       out.writeByte(-1);
     } else {
       out.writeByte(value4.scale());
       byte[] byteArray = value4.unscaledValue().toByteArray();
-      out.writeInt(byteArray.length);
+      int arrayLength = byteArray.length;
+      if (arrayLength > Byte.MAX_VALUE) {
+        throw new IllegalArgumentException("unsupported big integer size");
+      }
+      out.writeByte(arrayLength);
       out.write(byteArray);
     }
 
@@ -136,12 +145,12 @@ public class ExternalizedPojo implements Externalizable {
     } else {
       this.value3 = stringVal;
     }
-    
+
     int scale = in.readByte();
     if (scale == -1) {
       this.value4 = null;
     } else {
-      int length = in.readInt();
+      int length = in.readByte();
       byte[] value = new byte[length];
       in.readFully(value);
       BigInteger uncsaled = new BigInteger(value);

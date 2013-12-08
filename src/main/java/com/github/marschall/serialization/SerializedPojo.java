@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.BitSet;
 
-public class SerializedPojo implements Serializable {
+public class SerializedPojo implements Serializable, WritablePojo {
 
   private Integer value1;
   private Long value2;
@@ -16,6 +16,7 @@ public class SerializedPojo implements Serializable {
     return value1;
   }
 
+  @Override
   public void setValue1(Integer value1) {
     this.value1 = value1;
   }
@@ -24,6 +25,7 @@ public class SerializedPojo implements Serializable {
     return value2;
   }
 
+  @Override
   public void setValue2(Long value2) {
     this.value2 = value2;
   }
@@ -32,6 +34,7 @@ public class SerializedPojo implements Serializable {
     return value3;
   }
 
+  @Override
   public void setValue3(String value3) {
     this.value3 = value3;
   }
@@ -40,6 +43,7 @@ public class SerializedPojo implements Serializable {
     return value4;
   }
 
+  @Override
   public void setValue4(BigDecimal value4) {
     this.value4 = value4;
   }
@@ -50,6 +54,7 @@ public class SerializedPojo implements Serializable {
   }
 
 
+  @Override
   public void setFlags(BitSet flags) {
     this.flags = flags;
   }

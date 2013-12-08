@@ -14,7 +14,7 @@ public class ExternalizedPojoTest {
   public void simpleSerialization() throws IOException, ClassNotFoundException {
     ExternalizedPojo pojo = new ExternalizedPojo();
     byte[] data = serialize(pojo);
-    ExternalizedPojo readBack = (ExternalizedPojo) dersialize(data);
+    WritablePojo readBack = (WritablePojo) dersialize(data);
     assertNotNull(readBack);
   }
 

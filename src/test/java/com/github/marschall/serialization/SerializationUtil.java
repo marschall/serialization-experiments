@@ -16,7 +16,7 @@ final class SerializationUtil {
     }
     return outputStream.toByteArray();
   }
-  
+
   static int serializedSize(Serializable object) throws IOException {
     // TODO optimize
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

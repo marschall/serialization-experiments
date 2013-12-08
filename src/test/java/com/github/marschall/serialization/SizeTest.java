@@ -25,6 +25,8 @@ public class SizeTest {
 
     System.out.printf("externalized size:\t%, 7d%n", externalizedSize);
     System.out.printf("serialized size:\t%, 7d%n", serializedSize);
+    System.out.printf("relative:\t\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
+    System.out.printf("============================================%n");
   }
 
   @Test
@@ -35,39 +37,31 @@ public class SizeTest {
       ExternalizedPojo externalizedPojo = new ExternalizedPojo();
       initialize(externalizedPojo);
       externalizedPojos.add(externalizedPojo);
-      
+
       SerializedPojo serializedPojo = new SerializedPojo();
       initialize(serializedPojo);
       serializedPojos.add(serializedPojo);
     }
-    
+
     int externalizedSize = serializedSize((Serializable) externalizedPojos);
     int serializedSize = serializedSize((Serializable) serializedPojos);
-    
+
     System.out.printf("externalized list size:\t%, 7d%n", externalizedSize);
     System.out.printf("serialized list size:\t%, 7d%n", serializedSize);
+    System.out.printf("relative:\t\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
+    System.out.printf("============================================%n");
 
   }
 
-  private void initialize(ExternalizedPojo externalizedPojo) {
+  private void initialize(WritablePojo externalizedPojo) {
     // avoid Integer.valueOf cache
     externalizedPojo.setValue1(1000);
     // avoid Long.valueOf cache
     externalizedPojo.setValue2(1000L);
     // avoid string intern pool cache
     externalizedPojo.setValue3(new String("abcdefghijklmnopqrstuvwxyz"));
-    externalizedPojo.setValue4(new BigDecimal("12345678.90"));
-    externalizedPojo.setFlags(new BitSet(50));
-  }
-
-  private void initialize(SerializedPojo externalizedPojo) {
-    // avoid Integer.valueOf cache
-    externalizedPojo.setValue1(1000);
-    // avoid Long.valueOf cache
-    externalizedPojo.setValue2(1000L);
-    // avoid string intern pool cache
-    externalizedPojo.setValue3(new String("abcdefghijklmnopqrstuvwxyz"));
-    externalizedPojo.setValue4(new BigDecimal("12345678.90"));
+    // create a new instance to void object output stream cache
+    externalizedPojo.setValue4(new BigDecimal("12345678901234567890.12"));
     externalizedPojo.setFlags(new BitSet(50));
   }
 
