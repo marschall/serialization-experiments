@@ -22,6 +22,49 @@ public class ExternalizedPojo implements Externalizable {
   private BigDecimal value4;
   private BitSet flags;
 
+  public Integer getValue1() {
+    return value1;
+  }
+
+  public void setValue1(Integer value1) {
+    this.value1 = value1;
+  }
+
+  public Long getValue2() {
+    return value2;
+  }
+
+  public void setValue2(Long value2) {
+    this.value2 = value2;
+  }
+
+  public String getValue3() {
+    return value3;
+  }
+
+  public void setValue3(String value3) {
+    this.value3 = value3;
+  }
+
+  public BigDecimal getValue4() {
+    return value4;
+  }
+
+  public void setValue4(BigDecimal value4) {
+    this.value4 = value4;
+  }
+
+
+  public BitSet getFlags() {
+    return flags;
+  }
+
+
+  public void setFlags(BitSet flags) {
+    this.flags = flags;
+  }
+
+
   @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeLong(serialVersionUID);
@@ -39,7 +82,7 @@ public class ExternalizedPojo implements Externalizable {
     } else {
       out.writeLong(value2);
     }
-    
+
     // String
     // NULL and "" are the same in Oracle
     if (value3 == null) {
@@ -59,6 +102,7 @@ public class ExternalizedPojo implements Externalizable {
       throw new InvalidClassException("incompatible class version");
     }
 
+    // Integer
     int intVal = in.readInt();
     if (intVal == Integer.MAX_VALUE) {
       this.value1 = null;
@@ -66,13 +110,16 @@ public class ExternalizedPojo implements Externalizable {
       this.value1 = intVal;
     }
 
+    // Long
     long longVal = in.readLong();
     if (longVal == Long.MAX_VALUE) {
       this.value2 = null;
     } else {
       this.value2 = longVal;
     }
-    
+
+    // String
+    // NULL and "" are the same in Oracle
     String stringVal = in.readUTF();
     if (stringVal.length() == 0) {
       this.value3 = null;

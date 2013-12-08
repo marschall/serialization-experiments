@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import static com.github.marschall.serialization.SerializationUtil.serialize;
+import static com.github.marschall.serialization.SerializationUtil.dersialize;
+
 import org.junit.Test;
 
 public class SerializedPojoTest {
@@ -19,11 +22,8 @@ public class SerializedPojoTest {
     try (ObjectOutputStream objectStream = new ObjectOutputStream(outputStream)) {
       objectStream.writeObject(pojo);
     }
-    byte[] data = outputStream.toByteArray();
-    SerializedPojo readBack;
-    try (ObjectInputStream objectStream = new ObjectInputStream(new ByteArrayInputStream(data))) {
-      readBack = (SerializedPojo) objectStream.readObject();
-    }
+    byte[] data = serialize(pojo);
+    SerializedPojo readBack = (SerializedPojo) dersialize(data);
     assertNotNull(readBack);
   }
 
