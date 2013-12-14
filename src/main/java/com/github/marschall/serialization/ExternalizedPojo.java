@@ -118,7 +118,7 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
       if (byteIndex * 8 > flagsArraySize) {
         end = byteIndex * 8 - flagsArraySize;
       } else {
-        end = 8;
+        end = 7;
       }
       int b = 0;
       for (int localBitIndex = 0; localBitIndex < end; ++localBitIndex) {

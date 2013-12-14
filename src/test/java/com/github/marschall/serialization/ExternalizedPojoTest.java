@@ -1,11 +1,14 @@
 package com.github.marschall.serialization;
 
+import static com.github.marschall.serialization.IsBitSetMatcher.isBitSet;
 import static com.github.marschall.serialization.SerializationUtil.dersialize;
 import static com.github.marschall.serialization.SerializationUtil.serialize;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -71,6 +74,10 @@ public class ExternalizedPojoTest {
     BitSet flags = readBack.getFlags();
     assertNotNull(flags);
     assertTrue(flags.isEmpty());
+    for (int i = 0; i < Constants.BIT_SET_SIZE; ++i) {
+      assertThat(flags, not(isBitSet(i)));
+    }
+    assertThat(flags, not(isBitSet(Constants.BIT_SET_SIZE)));
 //    assertEquals(Constants.BIT_SET_SIZE, flags.size());
   }
   
@@ -84,6 +91,10 @@ public class ExternalizedPojoTest {
     flags.set(0, Constants.BIT_SET_SIZE, true);
     assertNotNull(flags);
     assertFalse(flags.isEmpty());
+    for (int i = 0; i < Constants.BIT_SET_SIZE; ++i) {
+      assertThat(flags, isBitSet(i));
+    }
+    assertThat(flags, not(isBitSet(Constants.BIT_SET_SIZE)));
 //    assertEquals(Constants.BIT_SET_SIZE, flags.size());
   }
   
