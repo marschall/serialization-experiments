@@ -7,6 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
 final class SerializationUtil {
 
   static byte[] serialize(Serializable object) throws IOException {
@@ -31,6 +35,11 @@ final class SerializationUtil {
         ObjectInputStream objectStream = new ObjectInputStream(in)) {
       return objectStream.readObject();
     }
+  }
+  
+  static byte[] serializeJackson(Object pojo) throws IOException {
+    ObjectMapper objectMapper = new ObjectMapper();
+    return objectMapper.writeValueAsBytes(pojo);
   }
 
 }

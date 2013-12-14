@@ -9,9 +9,13 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
+import static com.github.marschall.serialization.SerializationUtil.serializeJackson;
+
 import org.junit.Test;
 
 public class SizeTest {
+
+  private static final int BIT_SET_SIZE = 70;
 
   @Test
   public void singleObject() throws IOException {
@@ -22,9 +26,11 @@ public class SizeTest {
 
     int externalizedSize = serializedSize(externalizedPojo);
     int serializedSize = serializedSize(serializedPojo);
+    int jsonSize = serializeJackson(serializedPojo).length;
 
     System.out.printf("externalized size:\t%, 7d%n", externalizedSize);
     System.out.printf("serialized size:\t%, 7d%n", serializedSize);
+    System.out.printf("JSON size:\t\t%, 7d%n", jsonSize);
     System.out.printf("relative:\t\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
     System.out.printf("============================================%n");
   }
@@ -45,9 +51,11 @@ public class SizeTest {
 
     int externalizedSize = serializedSize((Serializable) externalizedPojos);
     int serializedSize = serializedSize((Serializable) serializedPojos);
+    int jsonSize = serializeJackson(serializedPojos).length;
 
     System.out.printf("externalized list size:\t%, 7d%n", externalizedSize);
     System.out.printf("serialized list size:\t%, 7d%n", serializedSize);
+    System.out.printf("JSON size:\t\t%, 7d%n", jsonSize);
     System.out.printf("relative:\t\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
     System.out.printf("============================================%n");
 
@@ -62,7 +70,13 @@ public class SizeTest {
     externalizedPojo.setValue3(new String("abcdefghijklmnopqrstuvwxyz"));
     // create a new instance to void object output stream cache
     externalizedPojo.setValue4(new BigDecimal("12345678901234567890.12"));
-    externalizedPojo.setFlags(new BitSet(50));
+    BitSet flags = new BitSet(BIT_SET_SIZE);
+    for (int i = 0; i < BIT_SET_SIZE; ++i) {
+      if (i % 2 == 0) {
+        flags.set(i);
+      }
+    }
+    externalizedPojo.setFlags(flags);
   }
 
 }
