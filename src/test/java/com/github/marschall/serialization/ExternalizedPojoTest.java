@@ -34,7 +34,7 @@ public class ExternalizedPojoTest {
     assertNull(readBack.getValue4());
     assertNotNull(readBack.getFlags());
   }
-  
+
   @Test
   public void notNullFields() throws IOException, ClassNotFoundException {
     ExternalizedPojo pojo = new ExternalizedPojo();
@@ -50,7 +50,7 @@ public class ExternalizedPojoTest {
     assertEquals(new BigDecimal("10000000000000.00"), readBack.getValue4());
     assertNotNull(readBack.getFlags());
   }
-  
+
   @Test
   public void negativeValue() throws IOException, ClassNotFoundException {
     ExternalizedPojo pojo = new ExternalizedPojo();
@@ -64,7 +64,7 @@ public class ExternalizedPojoTest {
     assertEquals(new BigDecimal("-10000000000000.00"), readBack.getValue4());
     assertNotNull(readBack.getFlags());
   }
-  
+
   @Test
   public void bitSetNoneSet() throws IOException, ClassNotFoundException {
     ExternalizedPojo pojo = new ExternalizedPojo();
@@ -78,9 +78,9 @@ public class ExternalizedPojoTest {
       assertThat(flags, not(isBitSet(i)));
     }
     assertThat(flags, not(isBitSet(Constants.BIT_SET_SIZE)));
-//    assertEquals(Constants.BIT_SET_SIZE, flags.size());
+    //    assertEquals(Constants.BIT_SET_SIZE, flags.size());
   }
-  
+
   @Test
   public void bitSetAllSet() throws IOException, ClassNotFoundException {
     ExternalizedPojo pojo = new ExternalizedPojo();
@@ -95,9 +95,51 @@ public class ExternalizedPojoTest {
       assertThat(flags, isBitSet(i));
     }
     assertThat(flags, not(isBitSet(Constants.BIT_SET_SIZE)));
-//    assertEquals(Constants.BIT_SET_SIZE, flags.size());
+    //    assertEquals(Constants.BIT_SET_SIZE, flags.size());
   }
   
+  @Test
+  public void onlyFirstByte() throws IOException, ClassNotFoundException {
+    ExternalizedPojo pojo = new ExternalizedPojo();
+    pojo.getFlags().clear();
+    ExternalizedPojo readBack = copy(pojo);
+    assertNotNull(readBack);
+    BitSet flags = readBack.getFlags();
+    flags.set(0, true);
+    flags.set(7, true);
+    assertNotNull(flags);
+    assertFalse(flags.isEmpty());
+    for (int i = 0; i < Constants.BIT_SET_SIZE; ++i) {
+      if (i != 0 && i != 7) {
+        assertThat(flags, not(isBitSet(i)));
+      } else {
+        assertThat(flags, isBitSet(i));
+      }
+    }
+    assertThat(flags, not(isBitSet(Constants.BIT_SET_SIZE)));
+  }
+  
+  @Test
+  public void onlyLastByte() throws IOException, ClassNotFoundException {
+    ExternalizedPojo pojo = new ExternalizedPojo();
+    pojo.getFlags().clear();
+    ExternalizedPojo readBack = copy(pojo);
+    assertNotNull(readBack);
+    BitSet flags = readBack.getFlags();
+    flags.set(64, true);
+    flags.set(Constants.BIT_SET_SIZE - 1, true);
+    assertNotNull(flags);
+    assertFalse(flags.isEmpty());
+    for (int i = 0; i < Constants.BIT_SET_SIZE; ++i) {
+      if (i != 64 && i != Constants.BIT_SET_SIZE - 1) {
+        assertThat(flags, not(isBitSet(i)));
+      } else {
+        assertThat(flags, isBitSet(i));
+      }
+    }
+    assertThat(flags, not(isBitSet(Constants.BIT_SET_SIZE)));
+  }
+
   private ExternalizedPojo copy(ExternalizedPojo pojo) throws IOException, ClassNotFoundException {
     byte[] data = serialize(pojo);
     return (ExternalizedPojo) dersialize(data);

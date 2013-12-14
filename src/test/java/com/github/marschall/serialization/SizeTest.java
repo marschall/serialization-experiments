@@ -30,7 +30,7 @@ public class SizeTest {
     System.out.printf("-------------------------------------------%n");
     System.out.printf("externalized:\t%, 7d%n", externalizedSize);
     System.out.printf("serialized:\t%, 7d%n", serializedSize);
-    System.out.printf("JSON:\t\t%, 7d%n", jsonSize);
+    System.out.printf("Jackson:\t%, 7d%n", jsonSize);
     System.out.printf("relative:\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
     System.out.printf("============================================%n");
   }
@@ -57,7 +57,7 @@ public class SizeTest {
     System.out.printf("-------------------------------------------%n");
     System.out.printf("externalized:\t%, 7d%n", externalizedSize);
     System.out.printf("serialized:\t%, 7d%n", serializedSize);
-    System.out.printf("JSON:\t\t%, 7d%n", jsonSize);
+    System.out.printf("Jackson:\t%, 7d%n", jsonSize);
     System.out.printf("relative:\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
     System.out.printf("============================================%n");
 
