@@ -92,10 +92,15 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
       out.writeUTF(value3);
     }
 
+    // BigDecimal
     if (value4 == null) {
       out.writeByte(-1);
     } else {
-      out.writeByte(value4.scale());
+      int scale = value4.scale();
+      if (scale > Byte.MAX_VALUE) {
+        throw new IllegalArgumentException("unsupported big integer scale");
+      }
+      out.writeByte(scale);
       byte[] byteArray = value4.unscaledValue().toByteArray();
       int arrayLength = byteArray.length;
       if (arrayLength > Byte.MAX_VALUE) {
@@ -105,8 +110,25 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
       out.write(byteArray);
     }
     
-    // TODO Auto-generated method stub
-
+    // BitSet
+    int byteIndex = 0;
+    int flagsArraySize = getFlagsArraySize();
+    for (int globalBitIndex = 0; globalBitIndex < flagsArraySize; globalBitIndex += 8) {
+      int end;
+      if (byteIndex * 8 > flagsArraySize) {
+        end = byteIndex * 8 - flagsArraySize;
+      } else {
+        end = 8;
+      }
+      int b = 0;
+      for (int localBitIndex = 0; localBitIndex < end; ++localBitIndex) {
+        if (this.flags.get(globalBitIndex + localBitIndex)) {
+          b |= 1 << localBitIndex;
+        }
+      }
+      out.write(b);
+      byteIndex += 1;
+    }
   }
 
 
@@ -152,8 +174,32 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
       this.value4 = new BigDecimal(uncsaled, scale);
     }
 
-    // TODO Auto-generated method stub
-
+    // BitSet
+    int byteIndex = 0;
+    int flagsArraySize = getFlagsArraySize();
+    for (int globalBitIndex = 0; globalBitIndex < flagsArraySize; globalBitIndex += 8) {
+      int end;
+      if (byteIndex * 8 > flagsArraySize) {
+        end = byteIndex * 8 - flagsArraySize;
+      } else {
+        end = 8;
+      }
+      int b = in.readUnsignedByte();
+      for (int localBitIndex = 0; localBitIndex < end; ++localBitIndex) {
+        boolean isSet = (b |= 1 << localBitIndex) == 1;
+        this.flags.set(localBitIndex + globalBitIndex, isSet);
+      }
+      byteIndex += 1;
+    }
+  }
+  
+  static int getFlagsArraySize() {
+    int candidate = Constants.BIT_SET_SIZE / 8;
+    if (candidate * 8 == Constants.BIT_SET_SIZE) {
+      return candidate;
+    } else {
+      return candidate + 1;
+    }
   }
 
   static long computeSerialVersionUID() {
