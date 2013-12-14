@@ -113,7 +113,7 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
     // BitSet
     int byteIndex = 0;
     int flagsArraySize = getFlagsArraySize();
-    for (int globalBitIndex = 0; globalBitIndex < flagsArraySize; globalBitIndex += 8) {
+    for (int globalBitIndex = 0; globalBitIndex < Constants.BIT_SET_SIZE; globalBitIndex += 8) {
       int end;
       if (byteIndex * 8 > flagsArraySize) {
         end = byteIndex * 8 - flagsArraySize;
@@ -177,16 +177,16 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
     // BitSet
     int byteIndex = 0;
     int flagsArraySize = getFlagsArraySize();
-    for (int globalBitIndex = 0; globalBitIndex < flagsArraySize; globalBitIndex += 8) {
+    for (int globalBitIndex = 0; globalBitIndex < Constants.BIT_SET_SIZE; globalBitIndex += 8) {
       int end;
       if (byteIndex * 8 > flagsArraySize) {
         end = byteIndex * 8 - flagsArraySize;
       } else {
-        end = 8;
+        end = 7;
       }
       int b = in.readUnsignedByte();
       for (int localBitIndex = 0; localBitIndex < end; ++localBitIndex) {
-        boolean isSet = (b |= 1 << localBitIndex) == 1;
+        boolean isSet = (b & 1 << localBitIndex) != 0;
         this.flags.set(localBitIndex + globalBitIndex, isSet);
       }
       byteIndex += 1;

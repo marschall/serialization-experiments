@@ -3,11 +3,14 @@ package com.github.marschall.serialization;
 import static com.github.marschall.serialization.SerializationUtil.dersialize;
 import static com.github.marschall.serialization.SerializationUtil.serialize;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.BitSet;
 
 import org.junit.Test;
 
@@ -57,6 +60,31 @@ public class ExternalizedPojoTest {
     assertEquals(Long.valueOf(-100000000000L), readBack.getValue2());
     assertEquals(new BigDecimal("-10000000000000.00"), readBack.getValue4());
     assertNotNull(readBack.getFlags());
+  }
+  
+  @Test
+  public void bitSetNoneSet() throws IOException, ClassNotFoundException {
+    ExternalizedPojo pojo = new ExternalizedPojo();
+    pojo.getFlags().clear();
+    ExternalizedPojo readBack = copy(pojo);
+    assertNotNull(readBack);
+    BitSet flags = readBack.getFlags();
+    assertNotNull(flags);
+    assertTrue(flags.isEmpty());
+//    assertEquals(Constants.BIT_SET_SIZE, flags.size());
+  }
+  
+  @Test
+  public void bitSetAllSet() throws IOException, ClassNotFoundException {
+    ExternalizedPojo pojo = new ExternalizedPojo();
+    pojo.getFlags().clear();
+    ExternalizedPojo readBack = copy(pojo);
+    assertNotNull(readBack);
+    BitSet flags = readBack.getFlags();
+    flags.set(0, Constants.BIT_SET_SIZE, true);
+    assertNotNull(flags);
+    assertFalse(flags.isEmpty());
+//    assertEquals(Constants.BIT_SET_SIZE, flags.size());
   }
   
   private ExternalizedPojo copy(ExternalizedPojo pojo) throws IOException, ClassNotFoundException {
