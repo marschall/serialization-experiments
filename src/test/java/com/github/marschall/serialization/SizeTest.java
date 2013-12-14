@@ -26,7 +26,7 @@ public class SizeTest {
     int jsonSize = serializedJacksonSize(serializedPojo);
 
     System.out.printf("single%n");
-    System.out.printf("-------------------------------------------%n");
+    System.out.printf("------%n");
     System.out.printf("externalized:\t%, 7d%n", externalizedSize);
     System.out.printf("serialized:\t%, 7d%n", serializedSize);
     System.out.printf("Jackson:\t%, 7d%n", jsonSize);
@@ -36,9 +36,10 @@ public class SizeTest {
 
   @Test
   public void multipleObjects() throws IOException {
-    List<ExternalizedPojo> externalizedPojos = new ArrayList<>(100);
-    List<SerializedPojo> serializedPojos = new ArrayList<>(100);
-    for (int i = 0; i < 100; i++) {
+    int arraySize = 100;
+    List<ExternalizedPojo> externalizedPojos = new ArrayList<>(arraySize);
+    List<SerializedPojo> serializedPojos = new ArrayList<>(arraySize);
+    for (int i = 0; i < arraySize; i++) {
       ExternalizedPojo externalizedPojo = new ExternalizedPojo();
       initialize(externalizedPojo);
       externalizedPojos.add(externalizedPojo);
@@ -53,7 +54,7 @@ public class SizeTest {
     int jsonSize = serializedJacksonSize(serializedPojos);
 
     System.out.printf("list%n");
-    System.out.printf("-------------------------------------------%n");
+    System.out.printf("----%n");
     System.out.printf("externalized:\t%, 7d%n", externalizedSize);
     System.out.printf("serialized:\t%, 7d%n", serializedSize);
     System.out.printf("Jackson:\t%, 7d%n", jsonSize);

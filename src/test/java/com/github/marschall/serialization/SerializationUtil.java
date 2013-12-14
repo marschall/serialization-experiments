@@ -31,6 +31,8 @@ final class SerializationUtil {
     return outputStream.getCount();
   }
 
+  // TODO GSON
+
   static Object dersialize(byte[] data) throws ClassNotFoundException, IOException {
     try (ByteArrayInputStream in = new ByteArrayInputStream(data);
         ObjectInputStream objectStream = new ObjectInputStream(in)) {
