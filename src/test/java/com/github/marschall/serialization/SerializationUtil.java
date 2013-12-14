@@ -1,5 +1,7 @@
 package com.github.marschall.serialization;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,7 +10,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -40,7 +41,7 @@ final class SerializationUtil {
   static int serializedJacksonSize(Object pojo) throws IOException {
     ObjectMapper objectMapper = new ObjectMapper();
     CountingOutputStream stream = new CountingOutputStream();
-    OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
+    OutputStreamWriter writer = new OutputStreamWriter(stream, UTF_8);
     objectMapper.writeValue(writer, pojo);
     return stream.getCount();
   }
