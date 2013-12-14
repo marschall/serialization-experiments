@@ -15,8 +15,6 @@ import org.junit.Test;
 
 public class SizeTest {
 
-  private static final int BIT_SET_SIZE = 70;
-
   @Test
   public void singleObject() throws IOException {
     ExternalizedPojo externalizedPojo = new ExternalizedPojo();
@@ -65,22 +63,21 @@ public class SizeTest {
 
   }
 
-  private void initialize(WritablePojo externalizedPojo) {
+  private void initialize(WritablePojo pojo) {
     // avoid Integer.valueOf cache
-    externalizedPojo.setValue1(1000);
+    pojo.setValue1(1000);
     // avoid Long.valueOf cache
-    externalizedPojo.setValue2(1000L);
+    pojo.setValue2(100000000000L);
     // avoid string intern pool cache
-    externalizedPojo.setValue3(new String("abcdefghijklmnopqrstuvwxyz"));
+    pojo.setValue3(new String("abcdefghijklmnopqrstuvwxyz"));
     // create a new instance to void object output stream cache
-    externalizedPojo.setValue4(new BigDecimal("12345678901234567890.12"));
-    BitSet flags = new BitSet(BIT_SET_SIZE);
-    for (int i = 0; i < BIT_SET_SIZE; ++i) {
+    pojo.setValue4(new BigDecimal("12345678901234567890.12"));
+    BitSet flags = pojo.getFlags();
+    for (int i = 0; i < Constants.BIT_SET_SIZE; ++i) {
       if (i % 2 == 0) {
         flags.set(i);
       }
     }
-    externalizedPojo.setFlags(flags);
   }
 
 }

@@ -21,7 +21,7 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
   private Long value2;
   private String value3;
   private BigDecimal value4;
-  private BitSet flags;
+  private BitSet flags = new BitSet(Constants.BIT_SET_SIZE);
 
   public Integer getValue1() {
     return value1;
@@ -60,14 +60,9 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
   }
 
 
+  @Override
   public BitSet getFlags() {
     return flags;
-  }
-
-
-  @Override
-  public void setFlags(BitSet flags) {
-    this.flags = flags;
   }
 
 
@@ -109,7 +104,7 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
       out.writeByte(arrayLength);
       out.write(byteArray);
     }
-
+    
     // TODO Auto-generated method stub
 
   }

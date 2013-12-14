@@ -13,6 +13,6 @@ public interface WritablePojo {
 
   void setValue4(BigDecimal value4);
 
-  void setFlags(BitSet flags);
+  BitSet getFlags();
 
 }
