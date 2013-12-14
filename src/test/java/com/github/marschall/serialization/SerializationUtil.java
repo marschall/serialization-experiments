@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -35,9 +37,12 @@ final class SerializationUtil {
     }
   }
   
-  static byte[] serializeJackson(Object pojo) throws IOException {
+  static int serializedJacksonSize(Object pojo) throws IOException {
     ObjectMapper objectMapper = new ObjectMapper();
-    return objectMapper.writeValueAsBytes(pojo);
+    CountingOutputStream stream = new CountingOutputStream();
+    OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
+    objectMapper.writeValue(writer, pojo);
+    return stream.getCount();
   }
   
   static final class CountingOutputStream extends OutputStream {

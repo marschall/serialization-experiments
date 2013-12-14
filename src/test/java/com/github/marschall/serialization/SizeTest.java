@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-import static com.github.marschall.serialization.SerializationUtil.serializeJackson;
+import static com.github.marschall.serialization.SerializationUtil.serializedJacksonSize;
 
 import org.junit.Test;
 
@@ -26,12 +26,14 @@ public class SizeTest {
 
     int externalizedSize = serializedSize(externalizedPojo);
     int serializedSize = serializedSize(serializedPojo);
-    int jsonSize = serializeJackson(serializedPojo).length;
-
-    System.out.printf("externalized size:\t%, 7d%n", externalizedSize);
-    System.out.printf("serialized size:\t%, 7d%n", serializedSize);
-    System.out.printf("JSON size:\t\t%, 7d%n", jsonSize);
-    System.out.printf("relative:\t\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
+    int jsonSize = serializedJacksonSize(serializedPojo);
+    
+    System.out.printf("single%n");
+    System.out.printf("-------------------------------------------%n");
+    System.out.printf("externalized:\t%, 7d%n", externalizedSize);
+    System.out.printf("serialized:\t%, 7d%n", serializedSize);
+    System.out.printf("JSON:\t\t%, 7d%n", jsonSize);
+    System.out.printf("relative:\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
     System.out.printf("============================================%n");
   }
 
@@ -51,12 +53,14 @@ public class SizeTest {
 
     int externalizedSize = serializedSize((Serializable) externalizedPojos);
     int serializedSize = serializedSize((Serializable) serializedPojos);
-    int jsonSize = serializeJackson(serializedPojos).length;
+    int jsonSize = serializedJacksonSize(serializedPojos);
 
-    System.out.printf("externalized list size:\t%, 7d%n", externalizedSize);
-    System.out.printf("serialized list size:\t%, 7d%n", serializedSize);
-    System.out.printf("JSON size:\t\t%, 7d%n", jsonSize);
-    System.out.printf("relative:\t\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
+    System.out.printf("list%n");
+    System.out.printf("-------------------------------------------%n");
+    System.out.printf("externalized:\t%, 7d%n", externalizedSize);
+    System.out.printf("serialized:\t%, 7d%n", serializedSize);
+    System.out.printf("JSON:\t\t%, 7d%n", jsonSize);
+    System.out.printf("relative:\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
     System.out.printf("============================================%n");
 
   }
