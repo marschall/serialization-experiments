@@ -64,6 +64,16 @@ public class ExternalizedPojoTest {
     assertEquals(new BigDecimal("-10000000000000.00"), readBack.getValue4());
     assertNotNull(readBack.getFlags());
   }
+  
+  @Test
+  public void unicodeString() throws IOException, ClassNotFoundException {
+    ExternalizedPojo pojo = new ExternalizedPojo();
+    String s = "\uD83C\uDF54";
+    pojo.setValue3(s);
+    ExternalizedPojo readBack = copy(pojo);
+    assertNotNull(readBack);
+    assertEquals(s, readBack.getValue3());
+  }
 
   @Test
   public void bitSetNoneSet() throws IOException, ClassNotFoundException {
