@@ -70,65 +70,11 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeLong(serialVersionUID);
 
-    // Integer
-    if (value1 == null) {
-      out.writeInt(Integer.MAX_VALUE);
-    } else {
-      out.writeInt(value1);
-    }
-
-    // Long
-    if (value2 == null) {
-      out.writeLong(Long.MAX_VALUE);
-    } else {
-      out.writeLong(value2);
-    }
-
-    // String
-    // NULL and "" are the same in Oracle
-    if (value3 == null) {
-      out.writeUTF("");
-    } else {
-      out.writeUTF(value3);
-    }
-
-    // BigDecimal
-    if (value4 == null) {
-      out.writeByte(-1);
-    } else {
-      int scale = value4.scale();
-      if (scale > Byte.MAX_VALUE) {
-        throw new IllegalArgumentException("unsupported big integer scale");
-      }
-      out.writeByte(scale);
-      byte[] byteArray = value4.unscaledValue().toByteArray();
-      int arrayLength = byteArray.length;
-      if (arrayLength > Byte.MAX_VALUE) {
-        throw new IllegalArgumentException("unsupported big integer size");
-      }
-      out.writeByte(arrayLength);
-      out.write(byteArray);
-    }
-    
-    // BitSet
-    int byteIndex = 0;
-    int flagsArraySize = getFlagsArraySize();
-    for (int globalBitIndex = 0; globalBitIndex < Constants.BIT_SET_SIZE; globalBitIndex += 8) {
-      int end;
-      if (byteIndex * 8 > flagsArraySize) {
-        end = byteIndex * 8 - flagsArraySize;
-      } else {
-        end = 7;
-      }
-      int b = 0;
-      for (int localBitIndex = 0; localBitIndex < end; ++localBitIndex) {
-        if (this.flags.get(globalBitIndex + localBitIndex)) {
-          b |= 1 << localBitIndex;
-        }
-      }
-      out.write(b);
-      byteIndex += 1;
-    }
+    ExternalizationUtil.writeInteger(out, this.value1);
+    ExternalizationUtil.writeLong(out, this.value2);
+    ExternalizationUtil.writeString(out, this.value3);
+    ExternalizationUtil.writeBigDecimal(out, this.value4);
+    ExternalizationUtil.writeBitSet(out, this.flags, Constants.BIT_SET_SIZE);
   }
 
 
@@ -138,68 +84,11 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
       throw new InvalidClassException("incompatible class version");
     }
 
-    // Integer
-    int intVal = in.readInt();
-    if (intVal == Integer.MAX_VALUE) {
-      this.value1 = null;
-    } else {
-      this.value1 = intVal;
-    }
-
-    // Long
-    long longVal = in.readLong();
-    if (longVal == Long.MAX_VALUE) {
-      this.value2 = null;
-    } else {
-      this.value2 = longVal;
-    }
-
-    // String
-    // NULL and "" are the same in Oracle
-    String stringVal = in.readUTF();
-    if (stringVal.length() == 0) {
-      this.value3 = null;
-    } else {
-      this.value3 = stringVal;
-    }
-
-    int scale = in.readByte();
-    if (scale == -1) {
-      this.value4 = null;
-    } else {
-      int length = in.readByte();
-      byte[] value = new byte[length];
-      in.readFully(value);
-      BigInteger uncsaled = new BigInteger(value);
-      this.value4 = new BigDecimal(uncsaled, scale);
-    }
-
-    // BitSet
-    int byteIndex = 0;
-    int flagsArraySize = getFlagsArraySize();
-    for (int globalBitIndex = 0; globalBitIndex < Constants.BIT_SET_SIZE; globalBitIndex += 8) {
-      int end;
-      if (byteIndex * 8 > flagsArraySize) {
-        end = byteIndex * 8 - flagsArraySize;
-      } else {
-        end = 7;
-      }
-      int b = in.readUnsignedByte();
-      for (int localBitIndex = 0; localBitIndex < end; ++localBitIndex) {
-        boolean isSet = (b & 1 << localBitIndex) != 0;
-        this.flags.set(localBitIndex + globalBitIndex, isSet);
-      }
-      byteIndex += 1;
-    }
-  }
-  
-  static int getFlagsArraySize() {
-    int candidate = Constants.BIT_SET_SIZE / 8;
-    if (candidate * 8 == Constants.BIT_SET_SIZE) {
-      return candidate;
-    } else {
-      return candidate + 1;
-    }
+    this.value1 = ExternalizationUtil.readInteger(in);
+    this.value2 = ExternalizationUtil.readLong(in);
+    this.value3 = ExternalizationUtil.readString(in);
+    this.value4 = ExternalizationUtil.readBigDecimal(in);
+    ExternalizationUtil.initializeBitSet(in, flags, Constants.BIT_SET_SIZE);
   }
 
   static long computeSerialVersionUID() {
