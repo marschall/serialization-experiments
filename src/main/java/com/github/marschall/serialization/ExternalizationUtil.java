@@ -33,7 +33,7 @@ final class ExternalizationUtil {
       out.writeUTF(value);
     }
   }
-  
+
   static void writeBigDecimal(ObjectOutput out, BigDecimal value) throws IOException {
     if (value == null) {
       out.writeByte(-1);
@@ -52,7 +52,7 @@ final class ExternalizationUtil {
       out.write(byteArray);
     }
   }
-  
+
   static void writeBitSet(ObjectOutput out, BitSet value, int bitSetSize) throws IOException {
     int byteIndex = 0;
     int flagsByteSize = flagsByteSize(bitSetSize);
@@ -73,7 +73,7 @@ final class ExternalizationUtil {
       byteIndex += 1;
     }
   }
-  
+
 
   // TODO generate as well
   static int flagsByteSize(int bitSetSize) {
@@ -84,7 +84,7 @@ final class ExternalizationUtil {
       return candidate + 1;
     }
   }
-  
+
   static Integer readInteger(ObjectInput in) throws IOException {
     int value = in.readInt();
     if (value == Integer.MAX_VALUE) {
@@ -93,7 +93,7 @@ final class ExternalizationUtil {
       return value;
     }
   }
-  
+
   static Long readLong(ObjectInput in) throws IOException {
     long value = in.readLong();
     if (value == Long.MAX_VALUE) {
@@ -102,7 +102,7 @@ final class ExternalizationUtil {
       return value;
     }
   }
-  
+
   static String readString(ObjectInput in) throws IOException {
     // NULL and "" are the same in Oracle
     String value = in.readUTF();
@@ -112,7 +112,7 @@ final class ExternalizationUtil {
       return value;
     }
   }
-  
+
   static BigDecimal readBigDecimal(ObjectInput in) throws IOException {
     int scale = in.readByte();
     if (scale == -1) {
@@ -125,7 +125,7 @@ final class ExternalizationUtil {
       return new BigDecimal(uncsaled, scale);
     }
   }
-  
+
   static void initializeBitSet(ObjectInput in, BitSet flags, int bitSetSize) throws IOException {
     int byteIndex = 0;
     int flagsByteSize = flagsByteSize(bitSetSize);
