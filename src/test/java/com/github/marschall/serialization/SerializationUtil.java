@@ -37,7 +37,7 @@ final class SerializationUtil {
       return objectStream.readObject();
     }
   }
-  
+
   static int serializedJacksonSize(Object pojo) throws IOException {
     ObjectMapper objectMapper = new ObjectMapper();
     CountingOutputStream stream = new CountingOutputStream();
@@ -45,15 +45,15 @@ final class SerializationUtil {
     objectMapper.writeValue(writer, pojo);
     return stream.getCount();
   }
-  
+
   static final class CountingOutputStream extends OutputStream {
-    
+
     private int count;
 
     CountingOutputStream() {
       this.count = 0;
     }
-    
+
     int getCount() {
       return this.count;
     }

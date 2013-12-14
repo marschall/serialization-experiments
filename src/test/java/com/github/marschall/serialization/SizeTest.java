@@ -1,5 +1,6 @@
 package com.github.marschall.serialization;
 
+import static com.github.marschall.serialization.SerializationUtil.serializedJacksonSize;
 import static com.github.marschall.serialization.SerializationUtil.serializedSize;
 
 import java.io.IOException;
@@ -8,8 +9,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
-
-import static com.github.marschall.serialization.SerializationUtil.serializedJacksonSize;
 
 import org.junit.Test;
 
@@ -25,7 +24,7 @@ public class SizeTest {
     int externalizedSize = serializedSize(externalizedPojo);
     int serializedSize = serializedSize(serializedPojo);
     int jsonSize = serializedJacksonSize(serializedPojo);
-    
+
     System.out.printf("single%n");
     System.out.printf("-------------------------------------------%n");
     System.out.printf("externalized:\t%, 7d%n", externalizedSize);

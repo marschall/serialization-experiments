@@ -14,7 +14,7 @@ final class IsBitSetMatcher extends TypeSafeMatcher<BitSet> {
   IsBitSetMatcher(int index) {
     this.index = index;
   }
-  
+
   @Factory
   static Matcher<BitSet> isBitSet(int index) {
     return new IsBitSetMatcher(index);

@@ -64,7 +64,7 @@ public class ExternalizedPojoTest {
     assertEquals(new BigDecimal("-10000000000000.00"), readBack.getValue4());
     assertNotNull(readBack.getFlags());
   }
-  
+
   @Test
   public void unicodeString() throws IOException, ClassNotFoundException {
     ExternalizedPojo pojo = new ExternalizedPojo();
@@ -107,7 +107,7 @@ public class ExternalizedPojoTest {
     assertThat(flags, not(isBitSet(Constants.BIT_SET_SIZE)));
     //    assertEquals(Constants.BIT_SET_SIZE, flags.size());
   }
-  
+
   @Test
   public void onlyFirstByte() throws IOException, ClassNotFoundException {
     ExternalizedPojo pojo = new ExternalizedPojo();
@@ -128,7 +128,7 @@ public class ExternalizedPojoTest {
     }
     assertThat(flags, not(isBitSet(Constants.BIT_SET_SIZE)));
   }
-  
+
   @Test
   public void onlyLastByte() throws IOException, ClassNotFoundException {
     ExternalizedPojo pojo = new ExternalizedPojo();
