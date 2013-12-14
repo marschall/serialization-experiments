@@ -1,9 +1,10 @@
 package com.github.marschall.serialization;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.BitSet;
 
-public interface WritablePojo {
+public interface WritablePojo extends Serializable {
 
   void setValue1(Integer value1);
 
