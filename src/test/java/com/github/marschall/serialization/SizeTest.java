@@ -2,6 +2,7 @@ package com.github.marschall.serialization;
 
 import static com.github.marschall.serialization.SerializationUtil.serializedJacksonSize;
 import static com.github.marschall.serialization.SerializationUtil.serializedSize;
+import static com.github.marschall.serialization.SerializationUtil.serializedGsonSize;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -24,11 +25,13 @@ public class SizeTest {
     int externalizedSize = serializedSize(externalizedPojo);
     int serializedSize = serializedSize(serializedPojo);
     int jsonSize = serializedJacksonSize(serializedPojo);
+    int gsonSize = serializedGsonSize(serializedPojo);
 
     System.out.printf("single%n");
     System.out.printf("------%n");
     System.out.printf("externalized:\t%, 7d%n", externalizedSize);
     System.out.printf("serialized:\t%, 7d%n", serializedSize);
+    System.out.printf("GSON:\t\t%, 7d%n", gsonSize);
     System.out.printf("Jackson:\t%, 7d%n", jsonSize);
     System.out.printf("relative:\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
     System.out.printf("============================================%n");
@@ -52,11 +55,13 @@ public class SizeTest {
     int externalizedSize = serializedSize((Serializable) externalizedPojos);
     int serializedSize = serializedSize((Serializable) serializedPojos);
     int jsonSize = serializedJacksonSize(serializedPojos);
+    int gsonSize = serializedGsonSize(serializedPojos);
 
     System.out.printf("list%n");
     System.out.printf("----%n");
     System.out.printf("externalized:\t%, 7d%n", externalizedSize);
     System.out.printf("serialized:\t%, 7d%n", serializedSize);
+    System.out.printf("GSON:\t\t%, 7d%n", gsonSize);
     System.out.printf("Jackson:\t%, 7d%n", jsonSize);
     System.out.printf("relative:\t%.2f %%%n", ((double) externalizedSize / (double) serializedSize) * 100.0d);
     System.out.printf("============================================%n");
