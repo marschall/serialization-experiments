@@ -11,11 +11,9 @@ import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
-import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.TearDown;
 
 import com.google.gson.Gson;
 
@@ -30,9 +28,8 @@ public class SerializationPerformance {
   private SerializedPojo serializedPojo;
   private CountingOutputStream countingOutputStream;
   private OutputStreamWriter writer;
-  private ObjectOutputStream objectStream;
 
-  @Setup(Level.Iteration)
+  @Setup
   public void init() throws IOException {
     this.objectMapper = new ObjectMapper();
     this.gson = new Gson();
@@ -48,38 +45,40 @@ public class SerializationPerformance {
 
     countingOutputStream = new CountingOutputStream();
     writer = new OutputStreamWriter(countingOutputStream, UTF_8);
-    objectStream = new ObjectOutputStream(countingOutputStream);
   }
 
-  @TearDown(Level.Iteration)
-  public void destroy() throws IOException {
-    objectStream.close();
-    writer.close();
-    countingOutputStream.close();
-  }
+//  @TearDown
+//  public void destroy() throws IOException {
+//    writer.close();
+//    countingOutputStream.close();
+//  }
 
   @GenerateMicroBenchmark
   public void serializationSingle() throws IOException {
-    objectStream.writeObject(this.serializedPojo);
-    objectStream.flush();
+    try (ObjectOutputStream objectStream = new ObjectOutputStream(countingOutputStream)) {
+      objectStream.writeObject(this.serializedPojo);
+    }
   }
 
   @GenerateMicroBenchmark
   public void serializationList() throws IOException {
-    objectStream.writeObject(this.serializedPojos);
-    objectStream.flush();
+    try (ObjectOutputStream objectStream = new ObjectOutputStream(countingOutputStream)) {
+      objectStream.writeObject(this.serializedPojos);
+    }
   }
 
   @GenerateMicroBenchmark
   public void externalizableSingle() throws IOException {
-    objectStream.writeObject(this.externalizedPojo);
-    objectStream.flush();
+    try (ObjectOutputStream objectStream = new ObjectOutputStream(countingOutputStream)) {
+      objectStream.writeObject(this.externalizedPojo);
+    }
   }
 
   @GenerateMicroBenchmark
   public void externalizableList() throws IOException {
-    objectStream.writeObject(this.externalizedPojos);
-    objectStream.flush();
+    try (ObjectOutputStream objectStream = new ObjectOutputStream(countingOutputStream)) {
+      objectStream.writeObject(this.externalizedPojos);
+    }
   }
 
   @GenerateMicroBenchmark
