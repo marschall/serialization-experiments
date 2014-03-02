@@ -8,11 +8,11 @@ public class JmhRunner {
   
   public static void main(String[] args) {
       String[] arguments = new String[]{TEST,
-          "-i", "" + 3,
+          "-i", "10",
 //          "-r", 5000 + "ms",
 //          "-t", "" + 1,
 //          "-w", "1000",
-            "-wi", "3",
+            "-wi", "10",
 //          "-wi", "3",
 //          "-l",
 //          "-v"

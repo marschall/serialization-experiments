@@ -27,7 +27,6 @@ public class SerializationPerformance {
   private ExternalizedPojo externalizedPojo;
   private SerializedPojo serializedPojo;
   private CountingOutputStream countingOutputStream;
-  private OutputStreamWriter writer;
 
   @Setup
   public void init() throws IOException {
@@ -44,7 +43,6 @@ public class SerializationPerformance {
     serializedPojos = generatePojoList(SerializedPojo.class, arraySize);
 
     countingOutputStream = new CountingOutputStream();
-    writer = new OutputStreamWriter(countingOutputStream, UTF_8);
   }
 
 //  @TearDown
@@ -83,26 +81,30 @@ public class SerializationPerformance {
 
   @GenerateMicroBenchmark
   public void gsonSingle() throws IOException {
-    this.gson.toJson(this.serializedPojo, this.writer);
-    this.writer.flush();
+    try (OutputStreamWriter writer = new OutputStreamWriter(countingOutputStream, UTF_8)) {
+      this.gson.toJson(this.serializedPojo, writer);
+    }
   }
 
   @GenerateMicroBenchmark
   public void gsonList() throws IOException {
-    this.gson.toJson(this.serializedPojos, this.writer);
-    this.writer.flush();
+    try (OutputStreamWriter writer = new OutputStreamWriter(countingOutputStream, UTF_8)) {
+      this.gson.toJson(this.serializedPojos, writer);
+    }
   }
   
   @GenerateMicroBenchmark
   public void jacksonSingle() throws IOException {
-    this.objectMapper.writeValue(this.writer, this.serializedPojo);
-    this.writer.flush();
+    try (OutputStreamWriter writer = new OutputStreamWriter(countingOutputStream, UTF_8)) {
+      this.objectMapper.writeValue(writer, this.serializedPojo);
+    }
   }
   
   @GenerateMicroBenchmark
   public void jacksonList() throws IOException {
-    this.objectMapper.writeValue(this.writer, this.serializedPojos);
-    this.writer.flush();
+    try (OutputStreamWriter writer = new OutputStreamWriter(countingOutputStream, UTF_8)) {
+      this.objectMapper.writeValue(writer, this.serializedPojos);
+    }
   }
 
 }
