@@ -47,6 +47,7 @@ final class ExternalizationUtil {
     if (value == null) {
       out.writeByte(-1);
     } else {
+      // TODO check for negative scales
       int scale = value.scale();
       if (scale > Byte.MAX_VALUE) {
         throw new IllegalArgumentException("unsupported big integer scale");
