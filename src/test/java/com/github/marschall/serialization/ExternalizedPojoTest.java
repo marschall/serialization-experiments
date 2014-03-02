@@ -14,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.BitSet;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -26,12 +27,14 @@ public class ExternalizedPojoTest {
     pojo.setValue2(null);
     pojo.setValue3(null);
     pojo.setValue4(null);
+    pojo.setValue5(null);
     ExternalizedPojo readBack = copy(pojo);
     assertNotNull(readBack);
     assertNull(readBack.getValue1());
     assertNull(readBack.getValue2());
     assertNull(readBack.getValue3());
     assertNull(readBack.getValue4());
+    assertNull(readBack.getValue5());
     assertNotNull(readBack.getFlags());
   }
 
@@ -42,12 +45,15 @@ public class ExternalizedPojoTest {
     pojo.setValue2(100000000000L);
     pojo.setValue3("abcd");
     pojo.setValue4(new BigDecimal("10000000000000.00"));
+    long now = System.currentTimeMillis();
+    pojo.setValue5(new Date(now));
     ExternalizedPojo readBack = copy(pojo);
     assertNotNull(readBack);
     assertEquals(Integer.valueOf(1), readBack.getValue1());
     assertEquals(Long.valueOf(100000000000L), readBack.getValue2());
     assertEquals("abcd", readBack.getValue3());
     assertEquals(new BigDecimal("10000000000000.00"), readBack.getValue4());
+    assertEquals(new Date(now), readBack.getValue5());
     assertNotNull(readBack.getFlags());
   }
 
@@ -57,11 +63,14 @@ public class ExternalizedPojoTest {
     pojo.setValue1(-1);
     pojo.setValue2(-100000000000L);
     pojo.setValue4(new BigDecimal("-10000000000000.00"));
+    long now = -1L;
+    pojo.setValue5(new Date(now));
     ExternalizedPojo readBack = copy(pojo);
     assertNotNull(readBack);
     assertEquals(Integer.valueOf(-1), readBack.getValue1());
     assertEquals(Long.valueOf(-100000000000L), readBack.getValue2());
     assertEquals(new BigDecimal("-10000000000000.00"), readBack.getValue4());
+    assertEquals(new Date(now), readBack.getValue5());
     assertNotNull(readBack.getFlags());
   }
 

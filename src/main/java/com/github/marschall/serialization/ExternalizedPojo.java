@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.BitSet;
+import java.util.Date;
 
 public class ExternalizedPojo implements Externalizable, WritablePojo {
 
@@ -20,6 +21,7 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
   private Long value2;
   private String value3;
   private BigDecimal value4;
+  private Date value5;
   private final BitSet flags = new BitSet(Constants.BIT_SET_SIZE);
 
   public Integer getValue1() {
@@ -58,6 +60,13 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
     this.value4 = value4;
   }
 
+  public Date getValue5() {
+    return value5;
+  }
+
+  public void setValue5(Date value5) {
+    this.value5 = value5;
+  }
 
   @Override
   public BitSet getFlags() {
@@ -73,6 +82,7 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
     ExternalizationUtil.writeLong(out, this.value2);
     ExternalizationUtil.writeString(out, this.value3);
     ExternalizationUtil.writeBigDecimal(out, this.value4);
+    ExternalizationUtil.writeDate(out, this.value5);
     ExternalizationUtil.writeBitSet(out, this.flags, Constants.BIT_SET_SIZE);
   }
 
@@ -87,6 +97,7 @@ public class ExternalizedPojo implements Externalizable, WritablePojo {
     this.value2 = ExternalizationUtil.readLong(in);
     this.value3 = ExternalizationUtil.readString(in);
     this.value4 = ExternalizationUtil.readBigDecimal(in);
+    this.value5 = ExternalizationUtil.readDate(in);
     ExternalizationUtil.initializeBitSet(in, flags, Constants.BIT_SET_SIZE);
   }
 

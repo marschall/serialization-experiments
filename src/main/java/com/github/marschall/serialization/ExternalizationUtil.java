@@ -6,6 +6,7 @@ import java.io.ObjectOutput;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.BitSet;
+import java.util.Date;
 
 final class ExternalizationUtil {
 
@@ -22,6 +23,14 @@ final class ExternalizationUtil {
       out.writeLong(Long.MAX_VALUE);
     } else {
       out.writeLong(value);
+    }
+  }
+  
+  static void writeDate(ObjectOutput out, Date value) throws IOException {
+    if (value == null) {
+      out.writeLong(Long.MIN_VALUE);
+    } else {
+      out.writeLong(value.getTime());
     }
   }
 
@@ -100,6 +109,15 @@ final class ExternalizationUtil {
       return null;
     } else {
       return value;
+    }
+  }
+  
+  static Date readDate(ObjectInput in) throws IOException {
+    long value = in.readLong();
+    if (value == Long.MIN_VALUE) {
+      return null;
+    } else {
+      return new Date(value);
     }
   }
 

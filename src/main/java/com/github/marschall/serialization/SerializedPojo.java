@@ -3,6 +3,7 @@ package com.github.marschall.serialization;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.BitSet;
+import java.util.Date;
 
 public class SerializedPojo implements Serializable, WritablePojo {
 
@@ -10,6 +11,7 @@ public class SerializedPojo implements Serializable, WritablePojo {
   private Long value2;
   private String value3;
   private BigDecimal value4;
+  private Date value5;
   private final BitSet flags = new BitSet(Constants.BIT_SET_SIZE);
 
   public Integer getValue1() {
@@ -48,6 +50,13 @@ public class SerializedPojo implements Serializable, WritablePojo {
     this.value4 = value4;
   }
 
+  public Date getValue5() {
+    return value5;
+  }
+
+  public void setValue5(Date value5) {
+    this.value5 = value5;
+  }
 
   @Override
   public BitSet getFlags() {
