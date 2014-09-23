@@ -1,7 +1,7 @@
 package com.github.marschall.serialization.gto;
 
-import static com.github.marschall.serialization.gto.SerializationUtil.dersialize;
-import static com.github.marschall.serialization.gto.SerializationUtil.serialize;
+import static com.github.marschall.serialization.SerializationUtil.dersialize;
+import static com.github.marschall.serialization.SerializationUtil.serialize;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;

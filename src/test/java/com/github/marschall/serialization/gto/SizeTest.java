@@ -2,9 +2,9 @@ package com.github.marschall.serialization.gto;
 
 import static com.github.marschall.serialization.gto.PojoUtils.generatePojoList;
 import static com.github.marschall.serialization.gto.PojoUtils.initialize;
-import static com.github.marschall.serialization.gto.SerializationUtil.serializedGsonSize;
-import static com.github.marschall.serialization.gto.SerializationUtil.serializedJacksonSize;
-import static com.github.marschall.serialization.gto.SerializationUtil.serializedSize;
+import static com.github.marschall.serialization.SerializationUtil.serializedGsonSize;
+import static com.github.marschall.serialization.SerializationUtil.serializedJacksonSize;
+import static com.github.marschall.serialization.SerializationUtil.serializedSize;
 
 import java.io.IOException;
 import java.io.Serializable;

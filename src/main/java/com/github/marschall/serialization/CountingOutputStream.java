@@ -1,13 +1,13 @@
-package com.github.marschall.serialization.gto;
+package com.github.marschall.serialization;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-final class CountingOutputStream extends OutputStream {
+public final class CountingOutputStream extends OutputStream {
 
   private int count;
 
-  CountingOutputStream() {
+  public CountingOutputStream() {
     this.count = 0;
   }
 

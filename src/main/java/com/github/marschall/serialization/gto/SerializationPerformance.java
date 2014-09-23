@@ -15,6 +15,7 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 
+import com.github.marschall.serialization.CountingOutputStream;
 import com.google.gson.Gson;
 
 @State(Scope.Thread)
