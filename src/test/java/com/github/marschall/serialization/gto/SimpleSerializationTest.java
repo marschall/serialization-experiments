@@ -1,7 +1,7 @@
-package com.github.marschall.serialization;
+package com.github.marschall.serialization.gto;
 
-import static com.github.marschall.serialization.SerializationUtil.dersialize;
-import static com.github.marschall.serialization.SerializationUtil.serialize;
+import static com.github.marschall.serialization.gto.SerializationUtil.dersialize;
+import static com.github.marschall.serialization.gto.SerializationUtil.serialize;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
@@ -12,6 +12,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+
+import com.github.marschall.serialization.gto.ExternalizedPojo;
+import com.github.marschall.serialization.gto.SerializedPojo;
+import com.github.marschall.serialization.gto.WritablePojo;
 
 @RunWith(Parameterized.class)
 public class SimpleSerializationTest {

@@ -1,8 +1,8 @@
-package com.github.marschall.serialization;
+package com.github.marschall.serialization.gto;
 
-import static com.github.marschall.serialization.IsBitSetMatcher.isBitSet;
-import static com.github.marschall.serialization.SerializationUtil.dersialize;
-import static com.github.marschall.serialization.SerializationUtil.serialize;
+import static com.github.marschall.serialization.gto.IsBitSetMatcher.isBitSet;
+import static com.github.marschall.serialization.gto.SerializationUtil.dersialize;
+import static com.github.marschall.serialization.gto.SerializationUtil.serialize;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -17,6 +17,9 @@ import java.util.BitSet;
 import java.util.Date;
 
 import org.junit.Test;
+
+import com.github.marschall.serialization.gto.Constants;
+import com.github.marschall.serialization.gto.ExternalizedPojo;
 
 public class ExternalizedPojoTest {
 

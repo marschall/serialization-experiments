@@ -1,4 +1,4 @@
-package com.github.marschall.serialization;
+package com.github.marschall.serialization.gto;
 
 final class Constants {
 

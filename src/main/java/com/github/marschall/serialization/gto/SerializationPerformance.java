@@ -1,7 +1,7 @@
-package com.github.marschall.serialization;
+package com.github.marschall.serialization.gto;
 
-import static com.github.marschall.serialization.PojoUtils.generatePojoList;
-import static com.github.marschall.serialization.PojoUtils.initialize;
+import static com.github.marschall.serialization.gto.PojoUtils.generatePojoList;
+import static com.github.marschall.serialization.gto.PojoUtils.initialize;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.io.OutputStreamWriter;
 import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
@@ -51,56 +51,56 @@ public class SerializationPerformance {
 //    countingOutputStream.close();
 //  }
 
-  @GenerateMicroBenchmark
+  @Benchmark
   public void serializationSingle() throws IOException {
     try (ObjectOutputStream objectStream = new ObjectOutputStream(countingOutputStream)) {
       objectStream.writeObject(this.serializedPojo);
     }
   }
 
-  @GenerateMicroBenchmark
+  @Benchmark
   public void serializationList() throws IOException {
     try (ObjectOutputStream objectStream = new ObjectOutputStream(countingOutputStream)) {
       objectStream.writeObject(this.serializedPojos);
     }
   }
 
-  @GenerateMicroBenchmark
+  @Benchmark
   public void externalizableSingle() throws IOException {
     try (ObjectOutputStream objectStream = new ObjectOutputStream(countingOutputStream)) {
       objectStream.writeObject(this.externalizedPojo);
     }
   }
 
-  @GenerateMicroBenchmark
+  @Benchmark
   public void externalizableList() throws IOException {
     try (ObjectOutputStream objectStream = new ObjectOutputStream(countingOutputStream)) {
       objectStream.writeObject(this.externalizedPojos);
     }
   }
 
-  @GenerateMicroBenchmark
+  @Benchmark
   public void gsonSingle() throws IOException {
     try (OutputStreamWriter writer = new OutputStreamWriter(countingOutputStream, UTF_8)) {
       this.gson.toJson(this.serializedPojo, writer);
     }
   }
 
-  @GenerateMicroBenchmark
+  @Benchmark
   public void gsonList() throws IOException {
     try (OutputStreamWriter writer = new OutputStreamWriter(countingOutputStream, UTF_8)) {
       this.gson.toJson(this.serializedPojos, writer);
     }
   }
   
-  @GenerateMicroBenchmark
+  @Benchmark
   public void jacksonSingle() throws IOException {
     try (OutputStreamWriter writer = new OutputStreamWriter(countingOutputStream, UTF_8)) {
       this.objectMapper.writeValue(writer, this.serializedPojo);
     }
   }
   
-  @GenerateMicroBenchmark
+  @Benchmark
   public void jacksonList() throws IOException {
     try (OutputStreamWriter writer = new OutputStreamWriter(countingOutputStream, UTF_8)) {
       this.objectMapper.writeValue(writer, this.serializedPojos);

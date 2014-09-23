@@ -1,4 +1,4 @@
-package com.github.marschall.serialization;
+package com.github.marschall.serialization.gto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

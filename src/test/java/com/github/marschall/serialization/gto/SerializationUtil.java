@@ -1,4 +1,4 @@
-package com.github.marschall.serialization;
+package com.github.marschall.serialization.gto;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -12,6 +12,7 @@ import java.io.Serializable;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.github.marschall.serialization.gto.CountingOutputStream;
 import com.google.gson.Gson;
 
 final class SerializationUtil {

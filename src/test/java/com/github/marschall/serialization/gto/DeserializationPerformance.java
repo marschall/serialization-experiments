@@ -1,4 +1,4 @@
-package com.github.marschall.serialization;
+package com.github.marschall.serialization.gto;
 
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;

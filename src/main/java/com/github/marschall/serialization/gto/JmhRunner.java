@@ -1,12 +1,15 @@
-package com.github.marschall.serialization;
+package com.github.marschall.serialization.gto;
+
+import java.io.IOException;
 
 import org.openjdk.jmh.Main;
+import org.openjdk.jmh.runner.RunnerException;
 
 public class JmhRunner {
 
   private static final String TEST = ".*" + SerializationPerformance.class.getSimpleName() + ".*"; 
   
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException, RunnerException {
       String[] arguments = new String[]{TEST,
           "-i", "10",
 //          "-r", 5000 + "ms",

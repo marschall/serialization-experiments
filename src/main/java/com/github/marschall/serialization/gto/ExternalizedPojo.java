@@ -1,4 +1,4 @@
-package com.github.marschall.serialization;
+package com.github.marschall.serialization.gto;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
