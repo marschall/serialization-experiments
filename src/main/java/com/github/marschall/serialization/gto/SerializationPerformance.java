@@ -3,6 +3,7 @@ package com.github.marschall.serialization.gto;
 import static com.github.marschall.serialization.gto.PojoUtils.generatePojoList;
 import static com.github.marschall.serialization.gto.PojoUtils.initialize;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.openjdk.jmh.annotations.Scope.Thread;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -11,14 +12,13 @@ import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 
 import com.github.marschall.serialization.CountingOutputStream;
 import com.google.gson.Gson;
 
-@State(Scope.Thread)
+@State(Thread)
 public class SerializationPerformance {
 
   private ObjectMapper objectMapper;
