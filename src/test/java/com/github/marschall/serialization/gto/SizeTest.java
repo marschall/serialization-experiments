@@ -1,19 +1,16 @@
 package com.github.marschall.serialization.gto;
 
-import static com.github.marschall.serialization.gto.PojoUtils.generatePojoList;
-import static com.github.marschall.serialization.gto.PojoUtils.initialize;
 import static com.github.marschall.serialization.SerializationUtil.serializedGsonSize;
 import static com.github.marschall.serialization.SerializationUtil.serializedJacksonSize;
 import static com.github.marschall.serialization.SerializationUtil.serializedSize;
+import static com.github.marschall.serialization.gto.PojoUtils.generatePojoList;
+import static com.github.marschall.serialization.gto.PojoUtils.initialize;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 import org.junit.Test;
-
-import com.github.marschall.serialization.gto.ExternalizedPojo;
-import com.github.marschall.serialization.gto.SerializedPojo;
 
 public class SizeTest {
 
