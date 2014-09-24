@@ -14,7 +14,7 @@ public final class OptimizedContextTO extends AbstractTransferObject {
 
   private final OnlineProcessingDateTO processingDateTO;
 
-  public DefaultContextTO(Long sessionId, Locale locale, Long institutionId, OnlineProcessingDateTO processingDateTO) {
+  public OptimizedContextTO(Long sessionId, Locale locale, Long institutionId, OnlineProcessingDateTO processingDateTO) {
     this.sessionId = sessionId;
     this.locale = locale;
     this.institutionId = institutionId;
