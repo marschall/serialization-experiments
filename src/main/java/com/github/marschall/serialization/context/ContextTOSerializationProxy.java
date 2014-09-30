@@ -68,19 +68,19 @@ final class ContextTOSerializationProxy implements Externalizable {
   }
 
   private static Date readDate(ObjectInput in) throws IOException {
-    long time = in.readLong();
-    if (time == Long.MIN_VALUE) {
+    int time = in.readInt();
+    if (time == Integer.MIN_VALUE) {
       return null;
     } else {
-      return new Date(time);
+      return new Date(time * 1000L);
     }
   }
 
   private static void writeDate(Date date, ObjectOutput out) throws IOException {
     if (date != null) {
-      out.writeLong(date.getTime());
+      out.writeInt((int) (date.getTime() / 1000L));
     } else {
-      out.writeLong(Long.MIN_VALUE);
+      out.writeInt(Integer.MIN_VALUE);
     }
   }
 

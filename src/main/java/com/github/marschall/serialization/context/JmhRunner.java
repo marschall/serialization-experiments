@@ -7,7 +7,8 @@ import org.openjdk.jmh.runner.RunnerException;
 
 public class JmhRunner {
 
-  private static final String TEST = ".*" + SerializationPerformance.class.getSimpleName() + ".*"; 
+//  private static final String TEST = ".*" + SerializationPerformance.class.getSimpleName() + ".*"; 
+  private static final String TEST = SerializationPerformance.class.getName().replace(".", "\\."); 
   
   public static void main(String[] args) throws IOException, RunnerException {
       String[] arguments = new String[]{TEST,
