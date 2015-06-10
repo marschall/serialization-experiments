@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,11 +26,33 @@ public class VersionedTest {
   public void readOldVersion() throws ClassNotFoundException, IOException {
     Versioned versioned = readVersioned(OBJECT_PATH);
     assertEquals("parent", versioned.getName());
-    assertEquals(Collections.singletonList("string"), versioned.getStirngs());
+    assertEquals(Collections.singleton("string"), versioned.getStrings());
+//    assertEquals(Collections.singletonList("string"), versioned.getStrings());
   }
 
   @Test
-  @Ignore
+  public void writeCurrentVersion() throws ClassNotFoundException, IOException {
+    Versioned versioned = new Versioned("parent");
+    versioned.addString("string");
+
+    Versioned copy = copy(versioned);
+    assertEquals("parent", copy.getName());
+    assertEquals(Collections.singleton("string"), copy.getStrings());
+  }
+
+  private static Versioned copy(Versioned versioned) throws IOException, ClassNotFoundException {
+    try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+      try (ObjectOutputStream stream = new ObjectOutputStream(bos)) {
+        stream.writeObject(versioned);
+      }
+      try (ObjectInputStream stream =  new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()))) {
+        return (Versioned) stream.readObject();
+      }
+    }
+  }
+
+  @Test
+//  @Ignore
   public void writeOldVersion() throws IOException {
     Versioned versioned = new Versioned("parent");
     versioned.addString("string");
