@@ -10,11 +10,11 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.marschall.serialization.CountingOutputStream;
 import com.google.gson.Gson;
 

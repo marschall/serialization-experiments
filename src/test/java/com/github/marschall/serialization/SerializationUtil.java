@@ -10,8 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 public final class SerializationUtil {

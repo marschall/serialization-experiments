@@ -10,16 +10,12 @@
   <name>Serialization Experiments</name>
   <description>Experiements with Java Serialization</description>
   
-   <prerequisites>
-     <maven>3.0</maven>
-   </prerequisites>
-  
   <developers>
     <developer>
       <id>marschall</id>
       <name>Philippe Marschall</name>
       <email>philippe.marschall@gmail.com</email>
-      <timezone>+1</timezone>
+      <timezone>Europe/Zurich</timezone>
       <url>https://github.com/marschall</url>
       <roles>
         <role>developer</role>
@@ -50,6 +46,13 @@
             <compilerVersion>${javac.target}</compilerVersion>
             <source>${javac.target}</source>
             <target>${javac.target}</target>
+            <annotationProcessors>
+              <annotationProcessor>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-generator-annprocess</artifactId>
+                <version>${jmh.version}</version>
+              </annotationProcessor>
+            </annotationProcessors>
         </configuration>
       </plugin>
       <plugin>
@@ -150,7 +153,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.13</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -160,14 +163,14 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-mapper-asl</artifactId>
-      <version>1.9.13</version>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.10.2</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-      <version>2.3</version>
+      <version>2.8.6</version>
     </dependency>
     <dependency>
       <groupId>org.hamcrest</groupId>
@@ -179,12 +182,6 @@
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-core</artifactId>
       <version>${jmh.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openjdk.jmh</groupId>
-      <artifactId>jmh-generator-annprocess</artifactId>
-      <version>${jmh.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>commons-lang</groupId>
@@ -230,7 +227,7 @@
   </profiles>
 
   <properties>
-    <jmh.version>1.1</jmh.version>
+    <jmh.version>1.23</jmh.version>
     <javac.target>1.8</javac.target>
     <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
