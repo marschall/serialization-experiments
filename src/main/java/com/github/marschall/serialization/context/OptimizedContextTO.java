@@ -2,8 +2,8 @@ package com.github.marschall.serialization.context;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public final class OptimizedContextTO extends AbstractTransferObject {
 
@@ -20,7 +20,7 @@ public final class OptimizedContextTO extends AbstractTransferObject {
     this.institutionId = institutionId;
     this.processingDateTO = processingDateTO;
 
-    hashCode = new HashCodeBuilder()
+    this.hashCode = new HashCodeBuilder()
       .append(sessionId)
       .append(locale)
       .append(institutionId)
@@ -30,19 +30,19 @@ public final class OptimizedContextTO extends AbstractTransferObject {
   }
 
   public OnlineProcessingDateTO getProcessingDateTO() {
-    return processingDateTO;
+    return this.processingDateTO;
   }
 
   public Long getSessionId() {
-    return sessionId;
+    return this.sessionId;
   }
 
   public Locale getLocale() {
-    return locale;
+    return this.locale;
   }
 
   public Long getInstitutionId() {
-    return institutionId;
+    return this.institutionId;
   }
 
   @Override
@@ -74,7 +74,7 @@ public final class OptimizedContextTO extends AbstractTransferObject {
 
   @Override
   public int hashCode() {
-    return hashCode;
+    return this.hashCode;
   }
 
 }

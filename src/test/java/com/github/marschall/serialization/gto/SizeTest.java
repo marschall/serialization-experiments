@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SizeTest {
 

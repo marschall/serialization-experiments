@@ -2,8 +2,8 @@ package com.github.marschall.serialization.context;
 
 import java.util.Date;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public final class OnlineProcessingDateTO extends AbstractTransferObject implements IOnlineProcessingDateProvider {
 
@@ -19,24 +19,24 @@ public final class OnlineProcessingDateTO extends AbstractTransferObject impleme
     this.nextProcessingDate = nextProcessingDate;
 
     // All fields are final, calculate hash code now
-    hashCode = new HashCodeBuilder(93, 49).
-        append(processingDate).
-        append(previousProcessingDate).
-        append(nextProcessingDate).
-        toHashCode();
+    this.hashCode = new HashCodeBuilder(93, 49)
+        .append(processingDate)
+        .append(previousProcessingDate)
+        .append(nextProcessingDate)
+        .toHashCode();
   }
 
 
   public Date getProcessingDate() {
-    return processingDate;
+    return this.processingDate;
   }
 
   public Date getPreviousProcessingDate() {
-    return previousProcessingDate;
+    return this.previousProcessingDate;
   }
 
   public Date getNextProcessingDate() {
-    return nextProcessingDate;
+    return this.nextProcessingDate;
   }
 
   @Override
@@ -56,14 +56,14 @@ public final class OnlineProcessingDateTO extends AbstractTransferObject impleme
     }
 
     return new EqualsBuilder()
-        .append(processingDate, rhs.processingDate)
-        .append(previousProcessingDate, rhs.previousProcessingDate)
-        .append(nextProcessingDate, rhs.nextProcessingDate)
+        .append(this.processingDate, rhs.processingDate)
+        .append(this.previousProcessingDate, rhs.previousProcessingDate)
+        .append(this.nextProcessingDate, rhs.nextProcessingDate)
         .isEquals();
   }
 
   @Override
   public int hashCode() {
-    return hashCode;
+    return this.hashCode;
   }
 }

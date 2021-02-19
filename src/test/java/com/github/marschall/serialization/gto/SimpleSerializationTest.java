@@ -2,34 +2,24 @@ package com.github.marschall.serialization.gto;
 
 import static com.github.marschall.serialization.SerializationUtil.dersialize;
 import static com.github.marschall.serialization.SerializationUtil.serialize;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
 public class SimpleSerializationTest {
 
-  private final WritablePojo pojo;
-
-  public SimpleSerializationTest(WritablePojo pojo) {
-    this.pojo = pojo;
+  public static Collection<WritablePojo> data() {
+    return List.of(new SerializedPojo(), new ExternalizedPojo());
   }
 
-  @Parameters
-  public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[]{new SerializedPojo()},
-        new Object[]{new ExternalizedPojo()});
-  }
-
-  @Test
-  public void simpleSerialization() throws IOException, ClassNotFoundException {
+  @ParameterizedTest
+  @MethodSource("data")
+  public void simpleSerialization(WritablePojo pojo) throws IOException, ClassNotFoundException {
     byte[] data = serialize(pojo);
     WritablePojo readBack = (WritablePojo) dersialize(data);
     assertNotNull(readBack);
